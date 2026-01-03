@@ -118,7 +118,7 @@ const Sidebar = () => {
           </h1>
           <div
             onClick={() => navigate("/profile")}
-            className="w-[60px] h-[60px] rounded-full overflow-hidden shadow-lg shadow-gray-400 cursor-pointer bg-white overflow-y-auto py-[10px]"
+            className="w-[60px] h-[60px] rounded-full overflow-hidden shadow-lg shadow-gray-400 cursor-pointer bg-white overflow-y-auto"
           >
             <img
               src={userData?.image || dp}
