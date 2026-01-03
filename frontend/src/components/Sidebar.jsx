@@ -73,7 +73,7 @@ const Sidebar = () => {
       } overflow-hidden relative lg:block h-[100vh] w-[100%] bg-slate-200`}
     >
       <div
-        className="w-[45px] h-[45px] bg-[#20c7ff] flex items-center justify-center rounded-full overflow-hidden shadow-lg shadow-gray-400 cursor-pointer transition-all duration-300 ease-in-out fixed bottom-9 left-2"
+        className="w-[45px] h-[45px] bg-[#20c7ff] flex items-center justify-center rounded-full overflow-hidden shadow-lg shadow-gray-400 cursor-pointer transition-all duration-300 ease-in-out fixed bottom-9 left-2 z-[150]"
         onClick={() => handleLogout()}
       >
         <BiLogOutCircle className="text-[24px] text-white" />
