@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {useDispatch} from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../configs/env";
+import { setUserData } from "../redux/slice/userSlice";
 
 const Signup = () => {
   // let navigate = useNavigate();
@@ -26,6 +27,7 @@ let dispatch = useDispatch();
         { withCredentials: true }
       );
       if (data.success) {
+        dispatch(setUserData(data.user));
         navigate("/profile")
         setEmail("")
         setPassword("")
