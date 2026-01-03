@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setSelectedUser, setUserData } from "../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../configs/env";
 
 const Login = () => {
   // let navigate = useNavigate();
   let navigate = useNavigate()
   let [showPassword, setShowPassword] = useState(false);
-  let backendUrl = import.meta.env.VITE_BACKEND_URL;
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [loading,setLoading] = useState(false)
