@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000
 
 // middleware
 app.use(cors({
-    origin:process.env.CLIENT_URL,
+    origin:"https://chat-app-lh2w.onrender.com",
     credentials:true
 }))
 app.use(express.json())
