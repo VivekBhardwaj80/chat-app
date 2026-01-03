@@ -3,12 +3,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import {useDispatch} from "react-redux"
 import { useNavigate } from "react-router-dom";
+import { backendUrl } from "../configs/env";
 
 const Signup = () => {
   // let navigate = useNavigate();
   let navigate = useNavigate()
   let [showPassword, setShowPassword] = useState(false);
-  let backendUrl = import.meta.env.VITE_BACKEND_URL;
   let [userName, setUserName] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
