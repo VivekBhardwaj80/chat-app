@@ -7,7 +7,7 @@ const app = express()
 const server = http.createServer(app)
 const io = new Server(server,{
     cors:{
-        origin:process.env.CLIENT_URL,
+        origin:"https://chat-app-lh2w.onrender.com",
     }
 })
 
