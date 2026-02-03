@@ -4,10 +4,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     userData: null,
-    otherUsers:null,
+    otherUsers:[],
     selectedUser:null,
     socket:null,
-    onlineUsers:null,
+    onlineUsers:[],
     searchData:null,
   },
   reducers: {

@@ -2,25 +2,25 @@ import React from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import getCurrentUser from "./hooks/getCurrentUser";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useDispatch, useSelector } from "react-redux";
-import getOtherUsers from "./hooks/getOtherUsers";
+import useGetOtherUsers from "./hooks/getOtherUsers";
 import { io } from "socket.io-client";
 import { useEffect } from "react";
 import { backendUrl } from "./configs/env";
 import { setOnlineUsers, setSocket } from "./redux/slice/userSlice";
 
 const App = () => {
-  let { userData, socket, onlineUsers } = useSelector((state) => state.user);
+  let { userData, socket } = useSelector((state) => state.user);
   let dispatch = useDispatch();
   const location = useLocation();
 
   // hooks
   getCurrentUser(location.pathname);
-  getOtherUsers(location.pathname);
+  useGetOtherUsers();
 
   // socket.io connection
   useEffect(() => {
@@ -55,7 +55,6 @@ const App = () => {
     <>
       <ToastContainer />
       <Routes>
-        {/* <Route path='/login' element={<Login />}/> */}
         <Route
           path="/login"
           element={!userData ? <Login /> : <Navigate to={"/"} />}

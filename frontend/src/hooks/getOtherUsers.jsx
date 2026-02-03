@@ -3,33 +3,37 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { backendUrl } from "../configs/env";
 import { useDispatch, useSelector } from "react-redux";
-import { setOtherUsers, } from "../redux/slice/userSlice";
+import { setOtherUsers } from "../redux/slice/userSlice";
 
-const getOtherUsers = (pathname) => {
-  let dispatch = useDispatch();
-  let { userData } = useSelector((state) => state.user);
+const useGetOtherUsers = () => {
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.user);
+
   useEffect(() => {
-    if(!userData) return
-    if(pathname === "/login" || pathname === "/signup") return
-    const fetchUserDate = async () => {
+    if (!userData) return;
+
+    const fetchUsers = async () => {
       try {
-        let { data } = await axios.get(`${backendUrl}/api/v1/user/allUsers`, {
-          withCredentials: true,
-        });
-        dispatch(setOtherUsers(data.users));
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast(error.response.data.message);
-        } else {
-          toast(error.message);
+        const { data } = await axios.get(
+          `${backendUrl}/api/v1/user/allUsers`,
+          { withCredentials: true }
+        );
+
+        if (data?.users) {
+          // Exclude the logged-in user
+          
+          const otherUsersFiltered = data.users.filter(
+            (user) => user._id !== userData._id
+          );
+          dispatch(setOtherUsers(otherUsersFiltered));
         }
+      } catch (error) {
+        toast(error?.response?.data?.message || error.message);
       }
     };
-    fetchUserDate();
-  }, [userData,dispatch,pathname]);
+
+    fetchUsers();
+  }, [userData, dispatch]);
 };
-export default getOtherUsers;
+
+export default useGetOtherUsers;

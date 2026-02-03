@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setSelectedUser, setUserData } from "../redux/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../configs/env";
 
 const Login = () => {
-  // let navigate = useNavigate();
   let navigate = useNavigate()
   let [showPassword, setShowPassword] = useState(false);
   let [email, setEmail] = useState("");

@@ -1,54 +1,52 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { backendUrl } from "../configs/env";
 import { setUserData } from "../redux/slice/userSlice";
 
 const Signup = () => {
-  // let navigate = useNavigate();
-  let navigate = useNavigate()
-  let [showPassword, setShowPassword] = useState(false);
-  let [userName, setUserName] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [loading, setLoading] = useState(false)
-let [err,setErr] = useState("")
-let dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
+  const dispatch = useDispatch();
 
   const signUpHandler = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     try {
       const { data } = await axios.post(
         `${backendUrl}/api/v1/auth/signup`,
         { userName, email, password },
         { withCredentials: true }
       );
+
       if (data.success) {
         dispatch(setUserData(data.user));
-        navigate("/profile")
-        setEmail("")
-        setPassword("")
-        setUserName("")
-        setLoading(false)
-        setErr("")
+        navigate("/profile");
+        setEmail("");
+        setPassword("");
+        setUserName("");
+        setLoading(false);
+        setErr("");
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         toast.error(error.response.data.message);
+        setErr(error.response.data.message);
       } else {
         toast.error(error.message);
+        setErr(error.message);
       }
-      setLoading(false)
-      setErr(error.response.data.message)
+      setLoading(false);
     }
   };
+
   return (
     <div className="w-full h-[100vh] bg-slate-200 flex items-center justify-center">
       <div className="w-full max-w-[450px] h-[500px] bg-white rounded-lg shadow-gray-400 shadow-lg flex flex-col gap-[30px]">
@@ -65,38 +63,40 @@ let dispatch = useDispatch();
             type="text"
             placeholder="Enter username"
             className="w-[90%] h-[43px] outline-none border-2 border-[#20c7ff] px-[20px] py-[10px] bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[19px]"
-            onChange={(e) => setUserName(e.target.value)}
             value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <input
             type="email"
             placeholder="Enter email"
             className="w-[90%] h-[43px] outline-none border-2 border-[#20c7ff] px-[20px] py-[10px] bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[19px]"
-            onChange={(e) => setEmail(e.target.value)}
             value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <div className="w-[90%] h-[43px] border-2 border-[#20c7ff] rounded-lg shadow-gray-200 shadow-lg overflow-hidden relative">
             <input
-              type={`${showPassword ? "text" : "password"}`}
+              type={showPassword ? "text" : "password"}
               placeholder="Enter password"
-              className="w-full h-full outline-none  px-[20px] py-[10px] bg-white  text-gray-700 text-[19px]"
-              onChange={(e) => setPassword(e.target.value)}
+              className="w-full h-full outline-none px-[20px] py-[10px] bg-white text-gray-700 text-[19px]"
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span
               className="absolute top-[6px] right-[10px] text-[#20c7ff] font-semibold cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
-            >{`${showPassword ? "hidden" : "show"}`}</span>
+            >
+              {showPassword ? "hidden" : "show"}
+            </span>
           </div>
           {err && <p className="text-red-500">{err}</p>}
           <button
             type="submit"
             className="px-[20px] py-[10px] bg-[#20c7ff] rounded-2xl shadow-gray-400 shadow-lg w-[200px] mt-[1px] font-semibold text-white hover:shadow-inner cursor-pointer"
           >
-            {loading?"Loading...":"Sign Up"}
+            {loading ? "Loading..." : "Sign Up"}
           </button>
           <p className="cursor-pointer" onClick={() => navigate("/login")}>
-            Already have an account ?{" "}
+            Already have an account?{" "}
             <span className="text-[#20c7ff] font-bold">Login</span>
           </p>
         </form>
